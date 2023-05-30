@@ -27,9 +27,11 @@ Finalmente el uso de preprocesadores nos permite que sea mucho más sencillo tra
 
 ### Tipos de Preprocesadores
 **[Stylus]**
+
 Stylus es un lenguaje de programación de hojas de estilo en cascada (CSS) que se compila en CSS estándar, está basado en JavaScript. Hay algunas diferencias importantes entre Stylus y SASS. La sintaxis de Stylus es más simple y clara, mientras que la sintaxis de SASS se considera más profesional y compleja. Stylus ofrece una mejor portabilidad y es más fácil de usar. Sin embargo, SASS ofrece mayor soporte al ser utilizado con una mayor cantidad de lenguajes de programación.
 
 **LESS**
+
 Una de las principales diferencias entre LESS y Sass es que Sass está codificado en Ruby y, por lo tanto, se procesa del lado del servidor, mientras que Less es una biblioteca de JavaScript (Como Stylus) y se procesa del lado del cliente. Un ejemplo es la forma en que ambos lenguajes manejan las variables es distinta. En LESS, los nombres de las variables se inicializan con @ y en Sass los nombres de las variables se inicializan con el símbolo $.
 
 ------------
@@ -91,7 +93,7 @@ Son las declaraciones que solo se pueden utilizar en la parte superior de la hoj
 + definición de una función
 + módulos
 
-###Universal statements
+### Universal statements
 Son las declaraciones que podemos utilizar en cualquier parte de la hoja de estilos. Algunos ejemplos son:
 + variables
 + estructuras de control
@@ -196,13 +198,13 @@ La directiva @extend de Sass nos permite organizar código y crear CSS mas limpi
 Un código ejemplo seria:
 ```css
 .error {
-		border: 1px #f00;
-		background-color: #fdd;
+	border: 1px #f00;
+	background-color: #fdd;
 }
 
 &--serious {
-		@extend .error;
-		border-width: 3px;
+	@extend .error;
+	border-width: 3px;
 }
 ```
 
@@ -217,15 +219,15 @@ Se declara con la regla @mixin seguido del nombre que queremos asignar y se invo
 Código de ejemplo:
 ```css
 @mixin horizontal-list {
-		li {
-			 display: inline-block;
-			margin-left: 2px;
-			margin-right: 2em;
-		}
+	li {
+		display: inline-block;
+		margin-left: 2px;
+		margin-right: 2em;
+	}
 }
 
 nav ul {
-		 @include horizontal-list;
+	@include horizontal-list;
 }
 ```
 
@@ -234,9 +236,9 @@ Existen mixins mas complejos que reciben parámetros argumentos. Un argumento es
 La utilidad de los mixins no sería tal si no tuvieran la capacidad de recibir argumentos.
 ```css
 @mixin circulo ($width, $height, $color) {
-		width: $width;
-		height: $height;
-		background: $color;
+	width: $width;
+	height: $height;
+	background: $color;
 }
 ```
 
@@ -272,16 +274,16 @@ Sass es compatible con una gran cantidad de operadores útiles para trabajar con
 Las funciones se llaman utilizando la sintaxis de función CSS normal.
 ```css
 @function pow($base, $exponent) {
-		$result: 1;
-		@for $_ from 1 through $exponent {
-				$result: $result * $base;
-		}
-		@return $result;
+	$result: 1;
+	@for $_ from 1 through $exponent {
+		$result: $result * $base;
+	}
+	@return $result;
 }
 
 .sidebar {
-		float: left;
-		margin-left: pow(4, 3) * 1px;
+	float: left;
+	margin-left: pow(4, 3) * 1px;
 }
 ```
 
@@ -314,7 +316,7 @@ Las funciones se llaman utilizando la sintaxis de función CSS normal.
 7. En tu archivo de configuración de Node.js (como package.json) agrega un script para compilar tus archivos Sass en CSS. Por ejemplo:
 ```
 "scripts": {
-		"build:css": "sass input.scss output.css"
+	"build:css": "sass input.scss output.css"
 }
 ```
 8. Ahora puedes ejecutar el script con el siguiente comando:
