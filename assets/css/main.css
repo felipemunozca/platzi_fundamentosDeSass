@@ -1,0 +1,272 @@
+@charset "UTF-8";
+/***
+declaración de variables.
+Las variables pueden ser declaradas en cualquier parte de la hoja de estilos, pero para mantener un orden y un fácil entendimiento, se declaran al principio.
+Se declaran los 4 colores principales que tendrá la pagina.
+También se declara el color que tendrá los textos.
+Se crea una variable para la fuente a utilizar, obtenido de google fonts.
+***/
+/* Expresión de color hexadecimal. */
+/* Expresión de string. */
+/* Tamaño del texto. */
+/*** Se declaran los mixins, por conveniencia de lectura para otros programadores, se hacen bajo la declaración de variables y antes de comenzar a crear las 
+reglas de la hoja de estilos. ***/
+/*** Se crea un mixin para asignar un display flex a los elementos en donde lo declare. Recibirá como argumentos la dirección (en filas, columnas), como estará
+justificado el contenido (centro, izquierda, derecha, espacio entre elementos) y como sera la alineación de los elementos. (centro, izquierda, derecha). ***/
+/*** Se crea un mixin para asignar los estilos de los botones ya que comparten similitud. ***/
+body {
+  margin: 0; /* Expresión en números. */
+  padding: 0;
+  background-color: #FFEFE7;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+nav {
+  /* width: 100%; */
+  /* height: 100px; */
+  width: auto;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /*** Cambio los estilos del display por los definidos en el mixin. ***/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: #7C6A0A;
+  padding: 15px;
+  /*** Aquí haremos uso de NESTING. ***/
+}
+nav p {
+  font-size: 1.5em;
+  padding-left: 30px;
+}
+nav .icons {
+  display: flex;
+  /*** gap -> propiedad que se utiliza junto a flexbox para manejar el espacio de los elementos en el eje X y eje Y. ***/
+  gap: 15px;
+  /*** Cambio los estilos del botón por los definidos en el mixin. ***/
+}
+nav .icons button {
+  background: none;
+  border-style: none;
+}
+
+article {
+  /*** width: auto -> para que el ancho de la pagina se ajuste automáticamente. ***/
+  width: auto;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: #7C6A0A;
+  padding-top: 70px;
+  padding-left: 45px;
+  padding-right: 45px;
+  /*** Se llama al mixin de botón fuera de la regla del botón, para evitar solapar los estilos. ***/
+}
+article .impact-section {
+  /* display: flex; */
+  /* flex-direction: column; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  padding-top: 50px;
+  gap: 25px;
+}
+article h1 {
+  font-size: 3em;
+  padding: 0;
+  margin: 0;
+}
+article p {
+  font-size: 1.5em;
+}
+article button {
+  background: none;
+  border-style: none;
+}
+article button {
+  width: 12vw;
+  background-color: #FA9500;
+  border-radius: 35px;
+  color: white;
+  font-size: 1em;
+  padding: 20px;
+}
+article button:hover {
+  transform: scale(1.1);
+}
+article img {
+  width: 25vw;
+  border-radius: 19px;
+  padding: 60px;
+}
+
+section {
+  width: 100%;
+  height: auto;
+}
+section h2 {
+  color: #7C6A0A;
+  font-size: 2em;
+}
+section .healthcare, section .furniture {
+  padding-bottom: 60px;
+}
+section .healthcare h2, section .furniture h2 {
+  font-weight: 300;
+  padding-bottom: 60px;
+}
+section .healthcare .card-section, section .furniture .card-section {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  /*  display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  flex-wrap: wrap;
+  column-gap: 200px;
+  row-gap: 80px;
+}
+section .healthcare .product-card, section .furniture .product-card {
+  width: 14vw;
+  height: 45vh;
+  background-color: #FFDAC6;
+  color: #7C6A0A;
+  padding: 20px;
+  border-radius: 8px;
+}
+section .healthcare .product-card .icon, section .furniture .product-card .icon {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 12px;
+}
+section .healthcare .product-card .icon svg, section .furniture .product-card .icon svg {
+  width: 28px;
+  height: 28px;
+}
+section .healthcare .product-card .product-image, section .furniture .product-card .product-image {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section .healthcare .product-card .product-image img, section .furniture .product-card .product-image img {
+  width: 12vw;
+  height: 30vh;
+  object-fit: cover;
+  border-radius: 6px;
+}
+section .furniture {
+  /*** Utilizo la directiva @extend para HEREDAR todos los estilos dentro de la clase healthcare. Esta es la forma correcta de reutilizar los estilos 
+  en vez de copiar y pegar lo mismo nuevamente y solo cambiar el los nombres de las clases, ya que estas agregando el mismo código dos veces. ***/
+  /*** ahora puede cambiar el color de la card de productos para decoración del hogar, sin que genere un problema con el color de las card de la sección 
+  anterior. ***/
+}
+section .furniture .product-card {
+  background-color: #BABD8D;
+  color: white;
+}
+
+.about-us {
+  padding-bottom: 60px;
+}
+.about-us h2 {
+  font-weight: bold;
+  padding-bottom: 60px;
+}
+.about-us .mission-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.about-us .mission-section .earth, .about-us .mission-section .innovation {
+  width: 30vw;
+  display: flex;
+  gap: 40px;
+  color: #E86424;
+}
+.about-us .mission-section .earth img, .about-us .mission-section .innovation img {
+  /*** Object-fit -> propiedad CSS para definir que no se altere el aspect ratio de una imagen., 
+  contain: se utiliza para agregar una imagen con sus propiedades originales, muy util para imágenes sacadas de un Figma que ya vienen 
+          definidas en una medida exacta. 
+  cover: se utiliza para cubrir todo el espacio asignado con la imagen. ***/
+  object-fit: contain;
+}
+.about-us .mission-section .earth p, .about-us .mission-section .innovation p {
+  text-align: center;
+  font-size: 1.5em;
+}
+.about-us .innovation {
+  /*** Utilizo la herencia para heredar todos los estilos de earth. ***/
+}
+
+.gallery h2 {
+  font-weight: bold;
+  padding-bottom: 60px;
+}
+.gallery .gallery-images {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.gallery .gallery-images img {
+  width: 28vw;
+  height: 45vh;
+  object-fit: cover;
+  /*** object-position -> se utiliza para mover la imagen que se encuentra dentro de una etiqueta, en este caso serian 5px hacia la derecha y 
+  35% para empujar la imagen hacia abajo. ***/
+  object-position: 5px 35%;
+  border-radius: 16px;
+}
+.gallery .gallery-images img:hover {
+  /*** transform -> propiedad CSS para transformar un elemento dentro de una etiqueta HTML.
+  scale -> se utiliza para crear un zoom dentro de un elemento, en este caso, hace crecer la imagen 1.1 veces de su tamaño original. ***/
+  transform: scale(1.1);
+}
+
+.location {
+  color: #E86424;
+}
+.location h2 {
+  padding-bottom: 60px;
+  padding-top: 60px;
+}
+.location .map {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px;
+}
+.location h3, .location p {
+  font-size: 1.5em;
+}
+
+footer {
+  background-color: #FA9500;
+  width: auto;
+  height: auto;
+  padding: 40px;
+  color: white;
+}
+footer .social-media {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+/*# sourceMappingURL=main.css.map */
