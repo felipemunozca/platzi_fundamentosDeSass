@@ -1,23 +1,18 @@
-/***
-declaración de variables.
-Las variables pueden ser declaradas en cualquier parte de la hoja de estilos, pero para mantener un orden y un fácil entendimiento, se declaran al principio.
-Se declaran los 4 colores principales que tendrá la pagina.
-También se declara el color que tendrá los textos.
-Se crea una variable para la fuente a utilizar, obtenido de google fonts.
-***/
+/*** Variables. ***/
 $primary-color: #FFEFE7;
 $secondary-color: #FFDAC6;
 $tertiary-color: #BABD8D;
 $quaternary-color:#FA9500;
-$primary-text-color: #7C6A0A; /* Expresión de color hexadecimal. */
-$font-stack: 'IBM Plex Sans', sans-serif; /* Expresión de string. */
-$paragraph-size: 1.5em; /* Tamaño del texto. */
+$primary-text-color: #7C6A0A;
+$font-stack: 'IBM Plex Sans', sans-serif;
+$paragraph-size: 1.5em;
+$text-color: #E86424;
+// break points utilizando la información de bootstrap 5.
+// $bootstrap-sm: 576px;
+$bootstrap-md: 768px;
+$bootstrap-lg: 992px;
 
-/*** Se declaran los mixins, por conveniencia de lectura para otros programadores, se hacen bajo la declaración de variables y antes de comenzar a crear las 
-reglas de la hoja de estilos. ***/
-
-/*** Se crea un mixin para asignar un display flex a los elementos en donde lo declare. Recibirá como argumentos la dirección (en filas, columnas), como estará
-justificado el contenido (centro, izquierda, derecha, espacio entre elementos) y como sera la alineación de los elementos. (centro, izquierda, derecha). ***/
+/*** Mixins ***/
 @mixin flexCenter($direction, $content, $align) {
     display: flex;
     flex-direction: $direction;
@@ -25,7 +20,6 @@ justificado el contenido (centro, izquierda, derecha, espacio entre elementos) y
 	align-items: $align;
 }
 
-/*** Se crea un mixin para asignar los estilos de los botones ya que comparten similitud. ***/
 @mixin buttonStyle {
     button {
         background: none;
@@ -33,58 +27,69 @@ justificado el contenido (centro, izquierda, derecha, espacio entre elementos) y
     }
 }
 
+// Al hacer comentarios con dos slash, el texto no se agregara al archivo main.css
+
+// Creo mis propios mixins para crear reglas CSS al cambiar la pantalla a tamaño de móviles o de tablets.
+// Los estilos de móvil recibirán un tamaño de pantalla definido en una variable. 
+@mixin responsiveMovil($break-point) {
+    @media (max-width: $break-point) {
+        // content serán las reglas css que cree al momento de llamar al mixin.
+        @content;
+    }
+}
+// Los estilos de tablets recibiran dos tamaños de pantalla como variables, para asegurar un máximo y un mínimo de tamaño.
+@mixin responsiveTablet($break-point-1, $break-point-2) {
+    @media only screen and (max-width: $break-point-1) and (min-width: $break-point-2)  {
+        @content;
+    }
+}
+
 body {
-    margin: 0; /* Expresión en números. */
+    margin: 0;
     padding: 0;
+    box-sizing: border-box;
     background-color: $primary-color;
     font-family: $font-stack;
 }
 
+/*** Barra de navegación. ***/
 nav {
-    /* width: 100%; */
-    /* height: 100px; */
     width: auto;
-    /* display: flex; */
-    /* justify-content: space-between; */
-    /*** Cambio los estilos del display por los definidos en el mixin. ***/
     @include flexCenter(row, space-between, center);
     color: $primary-text-color;
     padding: 15px;
 
-    /*** Aquí haremos uso de NESTING. ***/
     p {
         font-size: 1.5em;
         padding-left: 30px;
+
+        @include responsiveMovil($bootstrap-md) {
+            padding-left: 0;
+        }
     }
 
     .icons {
         display: flex;
-        /*** gap -> propiedad que se utiliza junto a flexbox para manejar el espacio de los elementos en el eje X y eje Y. ***/
         gap: 15px;
-
-        // button {
-        //     background: none;
-        //     border-style: none;
-        // }
-        /*** Cambio los estilos del botón por los definidos en el mixin. ***/
         @include buttonStyle;
     }
 }
 
+/*** Sección del header. ***/
 article {
-    /*** width: auto -> para que el ancho de la pagina se ajuste automáticamente. ***/
     width: auto;
-    /* display: flex; */
-    /* justify-content: space-between; */
     @include flexCenter(row, space-between, center);
     color: $primary-text-color;
     padding-top: 70px;
     padding-left: 45px;
     padding-right: 45px;
 
+    @include responsiveMovil($bootstrap-md) {
+        flex-wrap: wrap;
+        padding-top: 20px;
+    }
+
     .impact-section{
-		/* display: flex; */
-        /* flex-direction: column; */
         @include flexCenter(column, space-evenly, flex-start);
 		padding-top: 50px;
 		gap: 25px;
@@ -98,12 +103,15 @@ article {
 
     p {
         font-size:$paragraph-size;
+
+        @include responsiveMovil($bootstrap-md) {
+            text-align: justify
+        }
     }
 
-    /*** Se llama al mixin de botón fuera de la regla del botón, para evitar solapar los estilos. ***/
     @include buttonStyle;
     button {
-        width: 12vw;
+        /* width: 12vw; */
         background-color: $quaternary-color;
 		border-radius: 35px;
 		color: white;
@@ -112,6 +120,11 @@ article {
 
         &:hover {
             transform: scale(1.1);
+            transition: 0.3s;
+        }
+
+        @include responsiveMovil($bootstrap-md) {
+            margin-bottom: 50px;
         }
     }
 
@@ -119,9 +132,16 @@ article {
         width: 25vw;
         border-radius: 19px;
         padding: 60px;
+
+        @include responsiveMovil($bootstrap-md) {
+            /* width: 70%; */
+            /* padding: 0; */
+            display: none;
+        }
     }
 }
 
+/*** Sección cartas cuidado de la salud y decoración del hogar. ***/
 section {
     width: 100%;
     height: auto;
@@ -129,6 +149,10 @@ section {
     h2 {
         color: $primary-text-color;
         font-size: 2em;
+
+        @include responsiveMovil($bootstrap-md) {
+            margin-left: 15px;
+        }
     }
 
     .healthcare {
@@ -137,27 +161,50 @@ section {
         h2 {
             font-weight: 300;
 			padding-bottom: 60px;
+
+            @include responsiveMovil($bootstrap-md) {
+                padding-bottom: 30px;
+            }
         }
 
         .card-section{
 			width: auto;
 			height: auto;
-            @include flexCenter(row, space-evenly, center);
-           /*  display: flex; */
-            /* justify-content: center; */
-            /* align-items: center; */
+            @include flexCenter(row, space-evenly, flex-start);
             flex-wrap: wrap;
             column-gap: 200px;
 			row-gap: 80px;
+
+            @include responsiveMovil($bootstrap-md) {
+                flex-direction: column;
+                align-items: center;
+                column-gap: 0;
+                row-gap: 30px;
+            }
+
+            @include responsiveTablet($bootstrap-lg, $bootstrap-md) {
+                column-gap: 50px;
+            }
 		}
 
         .product-card {
-            width: 14vw;
-            height: 45vh;
+            /* width: 14vw; */
+            /* height: 45vh; */
+            width: 18vw;
+            height: auto;
             background-color: $secondary-color;
             color: $primary-text-color;
             padding: 20px;
             border-radius: 8px;
+
+            @include responsiveMovil($bootstrap-md) {
+                width: 55vw;
+                height: auto;
+            }
+
+            @include responsiveTablet($bootstrap-lg, $bootstrap-md) {
+                width: 30vw;
+            }
 
             .icon {
                 width: 100%;
@@ -183,19 +230,22 @@ section {
                     height: 30vh;
                     object-fit: cover;
                     border-radius: 6px;
+
+                    @include responsiveMovil($bootstrap-md) {
+                        width: 50vw;
+                    }
+
+                    @include responsiveTablet($bootstrap-lg, $bootstrap-md) {
+                        width: 25vw;
+                    }
                 }
             }
-
         }
     }
 
     .furniture{
-        /*** Utilizo la directiva @extend para HEREDAR todos los estilos dentro de la clase healthcare. Esta es la forma correcta de reutilizar los estilos 
-        en vez de copiar y pegar lo mismo nuevamente y solo cambiar el los nombres de las clases, ya que estas agregando el mismo código dos veces. ***/
 		@extend .healthcare;
 
-        /*** ahora puede cambiar el color de la card de productos para decoración del hogar, sin que genere un problema con el color de las card de la sección 
-        anterior. ***/
 		.product-card {
 			background-color: $tertiary-color;
 			color:white;
@@ -203,29 +253,48 @@ section {
 	}
 }
 
+/*** Sección ¿Por qué nosotros? ***/
 .about-us {
     padding-bottom: 60px;
 
     h2 {
         font-weight: bold;
         padding-bottom: 60px;
+
+        @include responsiveMovil($bootstrap-md) {
+            padding-bottom: 30px;
+        }
     }
 
     .mission-section {
 		@include flexCenter(row, space-evenly, center);
 
+        @include responsiveMovil($bootstrap-md) {
+            flex-direction: column;
+        }
+
         .earth {
-			$text-color: #E86424;
 			width: 30vw;
-			display:flex;
-			gap:40px;
+			display: flex;
+			gap: 40px;
 			color: $text-color;
 
+            @include responsiveMovil($bootstrap-md) {
+                width: 85%;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                color: #E86424;
+                margin: 10px;
+                
+            }
+
+            @include responsiveTablet($bootstrap-lg, $bootstrap-md) {
+                width: 50%;
+                margin: 20px;
+            }
+
             img {
-                /*** Object-fit -> propiedad CSS para definir que no se altere el aspect ratio de una imagen., 
-                contain: se utiliza para agregar una imagen con sus propiedades originales, muy util para imágenes sacadas de un Figma que ya vienen 
-                        definidas en una medida exacta. 
-                cover: se utiliza para cubrir todo el espacio asignado con la imagen. ***/
 				object-fit: contain;
 			}
 
@@ -238,52 +307,81 @@ section {
 	}
 
 	.innovation{
-        /*** Utilizo la herencia para heredar todos los estilos de earth. ***/
 		@extend .earth;
 	}
 
 }
 
+/*** Sección galería de estilos. ***/
 .gallery {
+    width: 100%;
 
 	h2 {
 		font-weight: bold;
 		padding-bottom: 60px;
+
+        @include responsiveMovil($bootstrap-md) {
+            padding-bottom: 30px;
+        }
 	}
 
 	.gallery-images {
 		@include flexCenter(row, space-between ,center);
+        padding: 0 30px;
+        margin-bottom: 60px;
+
+        @include responsiveMovil($bootstrap-md) {
+            overflow-x: scroll;
+            overscroll-behavior-x: contain;
+            scroll-snap-type: x proximity;
+        }
 
 		img {
 			width: 28vw;
 			height: 45vh;
 			object-fit: cover;
-            /*** object-position -> se utiliza para mover la imagen que se encuentra dentro de una etiqueta, en este caso serian 5px hacia la derecha y 
-            35% para empujar la imagen hacia abajo. ***/
 			object-position: 5px 35%;
 			border-radius: 16px;
 
+            @include responsiveMovil($bootstrap-md) {
+                width: auto;
+                margin: 0 30px;
+            }
+
             &:hover {
-                /*** transform -> propiedad CSS para transformar un elemento dentro de una etiqueta HTML.
-                scale -> se utiliza para crear un zoom dentro de un elemento, en este caso, hace crecer la imagen 1.1 veces de su tamaño original. ***/
                 transform: scale(1.1);
+                transition: 0.3s;
             }
 		}
 	}
 }
 
+/*** Sección Encuéntranos en. ***/
 .location {
-	$text-color: #E86424;
 	color: $text-color;
 
     h2 {
 		padding-bottom: 60px;
-		padding-top: 60px;
+
+        @include responsiveMovil($bootstrap-md) {
+            padding-bottom: 30px;
+        }
 	}
 
 	.map {
 		@include flexCenter(row, center ,center);
+        
 		padding-bottom: 50px;
+
+        img {
+            width: 100%;
+
+            @include responsiveMovil($bootstrap-md) {
+                width: 90%;
+                height: 70vh;
+                object-fit: cover;
+            }
+        }
 	}
 
 	h3, p {
